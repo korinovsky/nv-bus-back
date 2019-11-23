@@ -1,9 +1,9 @@
 import * as fs from 'fs';
-import {HttpsOptions} from '@nestjs/common/interfaces/external/https-options.interface';
+import {NestApplicationOptions} from '@nestjs/common';
 
 interface Config {
     port: number;
-    httpsOptions?: HttpsOptions;
+    options: NestApplicationOptions;
 }
 
 const filename = __dirname + '/../config.json';
@@ -13,9 +13,10 @@ const config: Config = fs.existsSync(filename) && require(filename) || {
     port: 3000,
 };
 
-if (config.httpsOptions) {
-    Object.entries(config.httpsOptions).forEach(([key, value]) =>
-        config.httpsOptions[key] = fs.readFileSync(value),
+const httpsOptions = config.options && config.options.httpsOptions;
+if (httpsOptions) {
+    Object.entries(httpsOptions).forEach(([key, value]) =>
+        httpsOptions[key] = fs.readFileSync(value),
     );
 }
 
