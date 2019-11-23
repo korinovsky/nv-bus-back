@@ -32,7 +32,7 @@ export class WaysService {
         const mapData = data => data
             .trim()
             .split('\n')
-            .map((name, id) => ({id, name}))
+            .map((name: string, id: number) => ({id, name: name.replace(/ \(пос.\)$/, '')}))
             .filter(value => !value.name.match(/\(к\/ст\)$/));
         return this.transportService.get<Way>(params, mapData);
     }
