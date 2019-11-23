@@ -1,8 +1,10 @@
 import {HttpException, HttpService, HttpStatus, Injectable} from '@nestjs/common';
 import {Observable, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
-import {AxiosRequestConfig} from "axios";
+import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import * as iconv from "iconv-lite";
+
+const decode = (value: AxiosResponse<Buffer>) =>  iconv.decode(value.data, 'cp1251').toString();
 
 @Injectable()
 export class TransportService {
@@ -15,7 +17,7 @@ export class TransportService {
         return this.http.get<Buffer>('http://mosgortrans.org/pass3/request.ajax.php', config)
             .pipe(
                 catchError(error => throwError(new HttpException(error.message, HttpStatus.BAD_GATEWAY))),
-                map(value => iconv.decode(value.data, "cp1251").toString()),
+                map(decode),
                 map(mapData)
             )
     }
