@@ -6,10 +6,10 @@ interface Config {
     httpsOptions?: HttpsOptions;
 }
 
-const filename = 'config.js';
+const filename = __dirname + '/../config.json';
 
 /* tslint:disable-next-line:no-var-requires */
-const config: Config = fs.existsSync(filename) && require(`../${filename}`) || {
+const config: Config = fs.existsSync(filename) && require(filename) || {
     port: 3000,
 };
 
