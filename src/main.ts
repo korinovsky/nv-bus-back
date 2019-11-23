@@ -1,9 +1,15 @@
 import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
+import config from './config';
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
-    await app.listen(3000);
+    let options;
+    const httpsOptions = config.httpsOptions;
+    if (httpsOptions) {
+        options = {httpsOptions};
+    }
+    const app = await NestFactory.create(AppModule, options);
+    await app.listen(config.port);
 }
 
 bootstrap();

@@ -24,9 +24,9 @@ export class WaysService {
         const params = {
             list: 'waypoints',
             type: 'avto',
-            way: way,
+            way,
             date: '1111100',
-            direction: direction,
+            direction,
         };
         const mapData = data => data
             .trim()

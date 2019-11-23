@@ -1,12 +1,13 @@
 import {Controller, Get, Param} from '@nestjs/common';
 import {WaysService} from './ways.service';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 
 @Controller('ways')
 export class WaysController {
     constructor(
-        private readonly appService: WaysService
-    ) {}
+        private readonly appService: WaysService,
+    ) {
+    }
 
     @Get()
     getWays(): Observable<string[]> {
