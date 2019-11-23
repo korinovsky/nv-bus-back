@@ -1,7 +1,7 @@
 import {HttpModule, Module} from '@nestjs/common';
-import {WaysController} from './ways.controller';
-import {WaysService} from './ways.service';
-import {TransportService} from './transport.service';
+import {WaysController} from './ways/ways.controller';
+import {WaysService} from './ways/ways.service';
+import {TransportService} from './core/transport.service';
 
 @Module({
     imports: [HttpModule],

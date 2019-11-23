@@ -13,7 +13,7 @@ export class TransportService {
     ) {
     }
 
-    get(params: {[param: string]: string}, mapData: (data: string) => any): Observable<any> {
+    get<T>(params: {[param: string]: string}, mapData: (data: string) => any): Observable<T> {
         const config: AxiosRequestConfig = {params, responseType: 'arraybuffer'};
         return this.http.get<Buffer>('http://mosgortrans.org/pass3/request.ajax.php', config)
             .pipe(

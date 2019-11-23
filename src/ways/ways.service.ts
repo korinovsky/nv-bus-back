@@ -1,6 +1,7 @@
 import {Injectable} from '@nestjs/common';
-import {TransportService} from './transport.service';
+import {TransportService} from '../core/transport.service';
 import {Observable} from 'rxjs';
+import {Way, Ways} from './ways.model';
 
 @Injectable()
 export class WaysService {
@@ -9,7 +10,7 @@ export class WaysService {
     ) {
     }
 
-    getWays(): Observable<string[]> {
+    getWays(): Observable<Ways> {
         const params = {
             list: 'ways',
             type: 'avto',
@@ -17,10 +18,10 @@ export class WaysService {
         const mapData = data => data
             .split('\n')
             .filter(value => value.match(/[A-ZА-Я0-9]/));
-        return this.transportService.get(params, mapData);
+        return this.transportService.get<Ways>(params, mapData);
     }
 
-    getWay(way: string, direction: string): Observable<string[]> {
+    getWay(way: string, direction: string): Observable<Way> {
         const params = {
             list: 'waypoints',
             type: 'avto',
@@ -30,7 +31,9 @@ export class WaysService {
         };
         const mapData = data => data
             .trim()
-            .split('\n');
-        return this.transportService.get(params, mapData);
+            .split('\n')
+            .map((name, id) => ({id, name}))
+            .filter(value => !value.name.match(/\(к\/ст\)$/));
+        return this.transportService.get<Way>(params, mapData);
     }
 }
