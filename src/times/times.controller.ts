@@ -14,7 +14,7 @@ export class TimesController {
     getTimes(
         @Param('way') way: string,
         @Param('direction') direction: 'AB' | 'BA' = 'AB',
-        @Param('waypoint') waypoint: number
+        @Param('waypoint') waypoint: number,
     ): Observable<DateTimes> {
         return this.timesService.getTimes(way, direction, waypoint);
     }
