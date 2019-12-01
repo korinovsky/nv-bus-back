@@ -13,9 +13,12 @@ export class TransportService {
     ) {
     }
 
-    get<T>(params: {[param: string]: string}, mapData: (data: string) => any): Observable<T> {
+    get<T>(params: {[param: string]: string | number}, mapData: (data: string) => any): Observable<T> {
         const config: AxiosRequestConfig = {params, responseType: 'arraybuffer'};
-        return this.http.get<Buffer>('http://mosgortrans.org/pass3/request.ajax.php', config)
+        const url = 'list' in params
+            ? 'http://mosgortrans.org/pass3/request.ajax.php'
+            : 'http://mosgortrans.org/pass3/shedule.printable.php';
+        return this.http.get<Buffer>(url, config)
             .pipe(
                 catchError(error => throwError(new HttpException(error.message, HttpStatus.BAD_GATEWAY))),
                 map(decode),

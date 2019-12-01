@@ -6,17 +6,17 @@ import {Way, Ways} from './ways.model';
 @Controller('ways')
 export class WaysController {
     constructor(
-        private readonly appService: WaysService,
+        private readonly waysService: WaysService,
     ) {
     }
 
     @Get()
     getWays(): Observable<Ways> {
-        return this.appService.getWays();
+        return this.waysService.getWays();
     }
 
     @Get([':way', ':way/:direction(AB|BA)'])
     getWay(@Param('way') way: string, @Param('direction') direction: 'AB' | 'BA' = 'AB'): Observable<Way> {
-        return this.appService.getWay(way, direction);
+        return this.waysService.getWay(way, direction);
     }
 }
